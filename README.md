@@ -303,3 +303,97 @@ These are the main parameters that we use to calculate factors such as propogati
 
 </details>
 
+<details>
+<summary>DAY 3 :  Design library cell </summary>
+<br>
+
+## SPICE Deck creation for CMOS Inverter
+
+SPICE deck contains the information of netlist such as:
+- Connectivity Information
+- Component values
+- 'Nodes' identified
+- 'Node' names
+
+![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/fde8c66e-6547-49a2-bdad-478c812d5419)
+
+### [CMOS_INVERTER.cir]()
+
+```
+*** MODEL DESCRIPTIONS ***
+*** NETLIST DESCRIPTION ***
+M1 out in vdd vdd pmos W=0.375u L=0.25u
+M2 out in 0 0 nmos W=0.375u L=0.25u
+
+cload out 0 10f
+
+Vdd vdd 0 2.5
+Vin in 0 2.5
+*** SIMULATION Commands ***
+
+.op
+.dc Vin 0 2.5 0.05
+*** include tsmc_025um_model.mod ***
+.LIB "tsmc_025um_models.mod" CMOS_MODELS
+.end
+```
+
+SPICE Simulation steps
+```
+cd <folder where the .cir file is present>
+source CMOS_INVERTER.cir
+run
+setplot
+dc1
+display
+plot out vs in
+```
+
+Observe the output. It should be symmetric ie., the threshold voltage should be at vdd/2 if it isnt, try to increase the PMOS width and run the simulation again. One of the important parameters tthat defines the **ROBUSTNESS** of the CMOS is ```Switching Threshold (Vm)``` @Vm : Vin = Vout
+
+## Fabrication Process for a CMOS Inverter
+
+
+/******************************************************************************************************************************************/
+full fab process
+/******************************************************************************************************************************************/
+
+
+## Inverter Layout using Magic
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign
+magic -T sky130A.tech sky130_inv.mag
+```
+
+## Exploring the Layout displayed by MAGIC
+
+Select the specific layer/device by hovering over the object and pressing, s, iteratively, until you traverse the hierarchy to the specified object:
+
+![Screenshot from 2023-09-12 18-15-54](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/1a918a4c-da78-4c9f-b553-e080ddd3e7e7)
+
+- select a region from the layout, go to the console and type ```what``` to display the information of selected area
+- To select a region, place ```cursor``` on that point and  press```s```. More the number of times you press ```s```, higher the abstraction selected.
+
+![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/fdd5bf6b-3483-4471-9b68-d98fa0b80af3)
+
+refer to [inverter](https://github.com/nickson-jose/vsdstdcelldesign) to create layout for CMOS Inverter
+
+### DRC Check
+
+To check for DRC Errors, select a region (left click for starting point, right click at end point) and see the DRC column at the top that shows how many DRC errors are present.The Details of DRC Errors will be printed on the console.
+
+![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/eebc0109-4408-40fa-a18e-ead67419cfa7)
+
+## Extracting PEX to SPICE with MAGIC
+
+Select Full inverter layout. Then
+![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/36c93dc8-6c1e-4ac4-9eac-f2c7a001b82a)
+
+![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/e58613be-86ee-4248-8298-ef002274429b)
+
+
+
+ </details>
+
+ ![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/0e355a75-55ff-4723-96ae-4abd5845697c)
