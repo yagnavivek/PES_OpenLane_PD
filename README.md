@@ -567,8 +567,39 @@ VLSI engineers will obtain system specifications in the architecture design phas
 For the design to be complete, the worst negative slack needs to be above or equal to 0. If the slack is outside of this range we can do one of multiple things:
 
 1. Review our synthesis strategy in OpenLANE
-2. Enable cell buffering
+    - Enalbed CELL_SIZING
+    - Enabled SYNTH_STRATEGY with parameter as "DELAY 1"
+    - The synthesis result is :
+  
+    ![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/b4a26ed1-6ac8-449c-bc6e-31ed04470c4e)
+
+    The slack has reduced a lot but still didnt meet the requirement. The sdc file used is [my_base.sdc](link_to_be_included) defined in [pre_sta.conf](link_to_be_added) using the command ```sta pre_sta.conf```
+
+   ![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/f7356fd8-9c7c-4d99-88d6-67ceadfa774f)
+
+    The delay is high when the fanout is high. Therefore we can re-run synthesis by changing the value of ```SYNTH_MAX_FANOUT``` variable
+    
+2. Enable cell buffering 
 3. Perform manual cell replacement on our WNS path with the OpenSTA tool
+
+    - We can see which net is driving most outputs and replace the driver cell with larger form of its own kind
+
+    ![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/f4e05f1d-0c2c-404a-8b43-6b82a097d73d)
+
 4. Optimize the fanout value with OpenLANE tool
+
+Since we have synthesised the core using our vsdinv cell too and as it got successfully synthesized, it should be visible in layout after ```run_placement``` stage which is followed after ```run_floorplan``` stage
+
+![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/8893a21d-26c6-4b36-bbc4-a2b9c1637cfb)
+
+## Clock Tree Synthesis
+
+- After all the above steps of fixing slack violations, as we have ```run_synthesis``` in openlane, it would have generated a mapped.v file in synthesis results but we have fixed all the violations using ```pre_sta.conf```. Therefore we write this netlist using ```write_verilog``` and replace the openlane generated mapped file ie., ```picorv32a.synthesis.v```
+
+- now in the openlane flow, continue with ```run_flooorplan``` ```run_placement``` ```run_cts```
+
+- To ensure that the cts step has added buffers and modified the netlist
+    ![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/69ddb549-d4bb-41e0-836c-686f2c375b1c)
+
 
 </details>
