@@ -470,11 +470,17 @@ The above file has details of inverter netlist but the sources and their values 
 
 ## Modified Spice netlist
 
-![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/6c05a8a3-4040-498c-9b83-7d958eae91a1)
+![Screenshot from 2023-09-14 17-25-22](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/21be1cbb-da31-4409-bf53-a3a80f11ac97)
 
-###############################################################
-results to be added
-###############################################################
+To run the spice netlist, run ```ngspice sky130_inv.spice``` and ```plot y vs time a```
+
+![Screenshot from 2023-09-14 17-32-14](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/c3c56cb8-475c-41cb-a23e-4f596a46df98)
+
+The results obtained from the graph are :
+- Rise Transition : 0.0395ns
+- Fall transition : 0.0282ns
+- Cell Rise delay : 0.03598ns
+- Cell fall delay : 0.0483ns
 
 </details>
 
@@ -536,5 +542,33 @@ To do this, we need the lef file, library file that has cells
 
 Change config file so that these libraries and lef file is used
 
+![Screenshot from 2023-09-14 15-46-16](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/7b474efc-df06-4cb8-8794-005226e4933c)
+
+
+#### 4. Make sure the lef file is added
+
+add the below 2 lines in the initial stage of interactive flow and ```run_synthesis```  to see if our inverter has been used and find timing violations if any.
+
+![2lines](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/1c964f50-cefe-426f-9104-4562a1aab570)
+
+![Screenshot from 2023-09-14 15-56-41](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/6ecd11e0-7b09-4966-9e36-897348896515)
+
+The above figure shows that our vsdinv cell has been used in synthesis process
+
+![Screenshot from 2023-09-14 15-57-05](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/f18b35db-10d4-4f47-b3b7-8a3ef657d57f)
+
+since there is slack, we have to reduce it
+
+VLSI engineers will obtain system specifications in the architecture design phase. These specifications will determine a required frequency of operation. To analyze a circuit's timing performance designers will use static timing analysis tools (STA). When referring to pre clock tree synthesis STA analysis we are mainly concerned with setup timing in regards to a launch clock. STA will report problems such as worst negative slack (WNS) and total negative slack (TNS). These refer to the worst path delay and total path delay in regards to our setup timing restraint. Fixing slack violations can be debugged through performing STA analysis with OpenSTA, which is integrated in the OpenLANE tool. To describe these constraints to tools such as In order to ensure correct operation of these tools two steps must be taken:
+
+- Design configuration files (.conf) - Tool configuration files for the specified design
+- Design Synopsys design constraint (.sdc) files - Industry standard constraints file
+
+For the design to be complete, the worst negative slack needs to be above or equal to 0. If the slack is outside of this range we can do one of multiple things:
+
+1. Review our synthesis strategy in OpenLANE
+2. Enable cell buffering
+3. Perform manual cell replacement on our WNS path with the OpenSTA tool
+4. Optimize the fanout value with OpenLANE tool
 
 </details>
