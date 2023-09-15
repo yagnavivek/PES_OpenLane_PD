@@ -2,7 +2,7 @@
 
 ## IC Package 
 
-![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/96055996-9ea4-4f61-b9fb-295efe5b1bbb)
+<img width="600" height="400" alt="image" src="https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/96055996-9ea4-4f61-b9fb-295efe5b1bbb">
 
 The most critical component of the IC is the ```chip``` because it contains the actual functionality of the device and IO pads helps in exchange of signals with the chip.
 
@@ -113,6 +113,8 @@ run_lvs
 run_antenna_check
 ```
 
+# COURSE
+
 <details>
 <summary>DAY 1 : Inception of opensource-EDA, Opennlane and Skywater130</summary>
 <br>
@@ -168,6 +170,8 @@ Once the design prep stage is done, it creates a runs directory where all the re
 ****The main task to do at the beginning stage is to find the flop ration ie., (No. of D flip flops / Total number of cells)****
 
 ![a_day1_flopratio](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/20e5fb03-2184-493f-892b-be3fdf5df92b)
+
+[BACK TO TOP](https://github.com/yagnavivek/PES_OpenLane_PD#to-enter-the-automated-flow-use-these-commands)
 
 </details>
 
@@ -300,6 +304,8 @@ These are the main parameters that we use to calculate factors such as propogati
 
 - ```propogation delay ``` - time(out_*_thr) - time(in_*_thr)
 - ```Transition time``` - time(slew_high_rise_thr) - time(slew_low_rise_thr)
+
+[BACK TO TOP](https://github.com/yagnavivek/PES_OpenLane_PD#to-enter-the-automated-flow-use-these-commands)
 
 </details>
 
@@ -453,6 +459,7 @@ For more information on how to fix these DRC errors using Magic please refer to:
 ## Extracting PEX to SPICE with MAGIC
 
 Select Full inverter layout. Then
+
 ![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/36c93dc8-6c1e-4ac4-9eac-f2c7a001b82a)
 
 ![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/e58613be-86ee-4248-8298-ef002274429b)
@@ -482,6 +489,8 @@ The results obtained from the graph are :
 - Cell Rise delay : 0.03598ns
 - Cell fall delay : 0.0483ns
 
+[BACK TO TOP](https://github.com/yagnavivek/PES_OpenLane_PD#to-enter-the-automated-flow-use-these-commands)
+
 </details>
 
 <details>
@@ -498,9 +507,12 @@ Place and routing (PnR) is performed using an abstract view of the GDS files gen
 From PnR POV, We have to follow certain guidelines to get standard cell set
 1. Input and output ports must lie on the intersection of vertical and horizontal tracks
 2. Width of the standard cell should be odd multiples of the track pitch and height should be odd multiple of vertical track pitch
-3. 
 
-Track info can be found at ``` ~/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/openlane/sky130fd_sc_hd/tracks.info```
+
+Track info can be found at :
+
+``` ~/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/openlane/sky130fd_sc_hd/tracks.info```
+
 ![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/3b8e5311-039d-4351-be5c-6f6ec5ba7a84)
 
 - 1st value indicates the offset and 2nd value indicates the pitch along provided direction
@@ -511,15 +523,11 @@ Track info can be found at ``` ~/Desktop/work/tools/openlane_working_dir/pdks/sk
 
 Layout before setting grid info vs after setting grid info
 
-*************************************************************************************************************
-# ORGANIZE THESE IMAGES
+<img width="333" height="420" alt="image" src="https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/e85123af-bc48-4150-9694-cf105a99493c">
+<img width="333" height="420" alt="image" src="https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/1ad46a25-95e6-4fe6-836c-0b1e34d6eef5">
+<img width="333" height="420" alt="image" src="https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/d0a2753b-7216-43c9-ad9a-992feffcaa40">
 
-![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/e85123af-bc48-4150-9694-cf105a99493c)
-![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/1ad46a25-95e6-4fe6-836c-0b1e34d6eef5)
-![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/d0a2753b-7216-43c9-ad9a-992feffcaa40)
-
-***********************************************************************************************************
-- From the above pic, its confirmed that the pins A and Y are at the intersection of X and Y tracks. SO the first condition is met.
+- From the above pic, its confirmed that the pins A and Y are at the intersection of X and Y tracks. So the first condition is met.
 - The PR boundary is taking 3 grids on width and 9 grids on height which says that the 2nd condition is also met
 
 ## LEF Generation
@@ -533,6 +541,7 @@ Since the layout is perfect, we can generate the lef file
 #### 2. Open the file and extract LEF
    - Open using ``` magic -T sky130A.tch sky130_vsdinv.mag```
    - in the console opened, type ```lef write``` and a lef file will be generated
+
 ![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/02952069-8336-47d6-a94b-7798300139fc)
 
 #### 3. Plug the generated lef file into PICORV32a
@@ -600,6 +609,85 @@ Since we have synthesised the core using our vsdinv cell too and as it got succe
 
 - To ensure that the cts step has added buffers and modified the netlist
     ![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/69ddb549-d4bb-41e0-836c-686f2c375b1c)
+
+## Post CTS- STA Analysis
+
+OpenLANE has the OpenROAD application integrated into its flow. The OpenROAD application has OpenSTA integrated into its flow. Therefore, we can perform STA analysis from within OpenLANE by invoking OpenROAD.
+
+In OpenROAD the timing analysis is done by creating a .db database file. This database file is created from the post-cts LEF and DEF files. To generate the .db files within OpenROAD:
+- Invoke OpenRoad
+- Read lef file from tmp folder of runs
+- Read def file from results of cts
+- write db file
+- Read the generated db file
+- Read the cts generated verilog file
+- read min and max liberty file
+- set the clocks
+- generate the reports
+
+![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/74edcca7-9519-4269-a2b9-2fafdeef4e66)
+![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/02cf90b0-d02b-411d-847b-be6159e74502)
+![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/a5c62171-3c46-482d-8ad5-d7700774d1ec)
+
+The results wont meet the timing because we are using min and max lib files and openroad doesnot support multi corner optimisation. Therefore we do it using only typical corner lib
+
+![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/e3687d97-556d-4b81-8261-0c78aba74d13)
+
+![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/843fce06-f1d1-4469-92d4-b9b1b4a82b91)
+
+![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/928a49af-78b3-4e0e-a8b2-5c2bf7589f20)
+
+We have to ensure that the skew is withing 10% of clock period ie., should be less than 1.6 in my case
+
+![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/dbd809aa-dcda-43a1-97da-9f0ab81fbf08)
+
+[BACK TO TOP](https://github.com/yagnavivek/PES_OpenLane_PD#to-enter-the-automated-flow-use-these-commands)
+
+</details>
+
+<details>
+<summary>DAY 5 : Final steps for RTL2GDSII</summary>
+<br>
+
+## Power Distribution Network
+
+After generating our clock tree network and verifying post routing STA checks we are ready to generate the power distribution network ```gen_pdn``` in OpenLANE:
+
+The PDN feature within OpenLANE will create:
+
+- Power ring global to the entire core
+- Power halo local to any preplaced cells
+- Power straps to bring power into the center of the chip
+- Power rails for the standard cells
+
+![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/b4fd0fda-f775-4b33-9aa8-c9a252ff19ab)
+
+Note: The pitch of the metal 1 power rails defines the height of the standard cells
+
+## Global and Detailed Routing
+
+OpenLANE uses TritonRoute as the routing engine ```run_routing``` for physical implementations of designs. Routing consists of two stages:
+
+- Global Routing - Routing guides are generated for interconnects on our netlist defining what layers, and where on the chip each of the nets will be reputed
+- Detailed Routing - Metal traces are iteratively laid across the routing guides to physically implement the routing guides
+
+If DRC errors persist after routing the user has two options:
+
+- Re-run routing with higher QoR settings
+- Manually fix DRC errors specific in tritonRoute.drc file
+
+## SPEF Extraction
+
+After routing has been completed interconnect parasitics can be extracted to perform sign-off post-route STA analysis. The parasitics are extracted into a SPEF file. The SPEF extractor is not included within OpenLANE as of now.
+
+```
+cd ~/Desktop/work/tools/SPEFEXTRACTOR
+python3 main.py <path to merged.lef in tmp> <path to def in routing>
+```
+
+The SPEF File will be generated in the location where def file is present
+
+[BACK TO TOP](https://github.com/yagnavivek/PES_OpenLane_PD#to-enter-the-automated-flow-use-these-commands)
 
 
 </details>
