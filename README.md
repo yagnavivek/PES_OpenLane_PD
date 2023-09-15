@@ -582,7 +582,7 @@ For the design to be complete, the worst negative slack needs to be above or equ
   
     ![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/b4a26ed1-6ac8-449c-bc6e-31ed04470c4e)
 
-    The slack has reduced a lot but still didnt meet the requirement. The sdc file used is [my_base.sdc](link_to_be_included) defined in [pre_sta.conf](link_to_be_added) using the command ```sta pre_sta.conf```
+    The slack has reduced a lot but still didnt meet the requirement. The sdc file used is [my_base.sdc](https://github.com/yagnavivek/PES_OpenLane_PD/blob/main/my_base.sdc) defined in [pre_sta.conf](https://github.com/yagnavivek/PES_OpenLane_PD/blob/main/pre_sta.conf) using the command ```sta pre_sta.conf```
 
    ![image](https://github.com/yagnavivek/PES_OpenLane_PD/assets/93475824/f7356fd8-9c7c-4d99-88d6-67ceadfa774f)
 
